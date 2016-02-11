@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export VAULT_ADDR=http://127.0.0.1:8200
+export VAULT_TOKEN=4392e8b0-6e1b-23ec-a11a-d6d35f612569
+
+vault "$@"

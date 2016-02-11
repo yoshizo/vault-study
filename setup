@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -e
+
+# Configure
+: ${VAULT_HOME:=/home/vagrant/vault}
+: ${VAULT_BIN_DIR:=${VAULT_HOME}/bin}
+
+VAULT_VERSION=0.5.0
+VAULT_ZIP=/tmp/vault.zip
+
+# Cleanup hook
+trap "rm -f ${VAULT_ZIP}" EXIT
+
+# Setup
+mkdir -p ${VAULT_HOME} ${VAULT_BIN_DIR}
+
+# Download
+curl \
+	--silent \
+	--show-error \
+	--fail \
+	https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip > ${VAULT_ZIP}
+
+# Installation
+unzip -p ${VAULT_ZIP} > ${VAULT_BIN_DIR}/vault
+chmod +x ${VAULT_BIN_DIR}/vault
+
+# Test
+${VAULT_BIN_DIR}/vault --version | grep -q ${VAULT_VERSION}
+echo Installation Success.

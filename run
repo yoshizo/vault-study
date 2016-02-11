@@ -1,0 +1,6 @@
+#!/bin/bash
+
+VAULT_HOME=/home/vagrant/vault
+
+sudo vault server \
+	-config=${VAULT_HOME}/conf/vault.json
