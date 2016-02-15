@@ -1,6 +1,11 @@
 #!/bin/bash
 
-VAULT_HOME=/home/vagrant/vault
+: ${VAULT_HOME:=/home/vagrant/vault}
+: ${VAULT_CONF_DIR:=${VAULT_HOME}/conf}
+: ${VAULT_LOG_DIR:=${VAULT_HOME}/log}
+
+mkdir -p ${VAULT_HOME} ${VAULT_CONF_DIR} ${VAULT_LOG_DIR}
 
 sudo vault server \
-	-config=${VAULT_HOME}/conf/vault.json
+	-config=${VAULT_CONF_DIR}/vault.json \
+  2 >&1 | tee ${VAULT_LOG_DIR}/vault.log
